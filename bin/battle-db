@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require File.join(File.dirname(__FILE__), '..', 'lib', 'battle', 'cli')
+
+bin     = Battle::Cli.bin
+command = (ARGV.shift || 'help').strip
+usage   = %Q{
+usage: #{bin} [-h|--help] command args
+
+Commands are:
+  migrate Migrate up.
+
+See '#{bin} command --help' for more information on specific commands.
+}.strip
+
+if command.nil? or command =~ /^\-{0,2}h(?:elp)?$/
+  puts usage
+  exit
+end
+
+command_bin = File.join(Battle::Cli.root, ['battle-db', command].join('-'))
+unless File.executable?(command_bin)
+  warn "#{bin}: '#{command}' is not an #{bin} command. See '#{bin} --help'."
+  exit -1
+end
+
+exec command_bin, *ARGV

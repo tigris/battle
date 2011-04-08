@@ -1,0 +1,90 @@
+#!/bin/bash
+
+home="/var/www"
+app="battle"
+bin="./bin/battle"
+mailto="root"
+
+new_tag=RELEASE-$(date +%Y%m%dT%H%M%S)
+old_tag=$(git tag -l RELEASE* | sort -r | head -n1)
+old_tag=${old_tag:-"HEAD^"}
+daemons=""
+migrations=""
+
+update_gems() {
+  logs=`bundle install --path gems 2>&1`
+
+  if [ $? != 0 ]; then
+    echo "failed to gem bundle: $! $logs" | mail -s "failed to restart $app due to bundler issue" $mailto
+    exit 1
+  fi
+}
+
+update_cron() {
+  sudo cp config/cron/* /etc/cron.d
+  sudo chown root.root /etc/cron.d/*
+}
+
+restart_daemons() {
+  config=$(git diff $old_tag | grep "^--- a/config/nginx")
+  if [ "x$config" != "x" ]; then
+    sudo service nginx reload > /dev/null
+    daemons="$daemons nginx"
+  fi
+
+  config=$(git diff $old_tag | grep "^--- a/\(lib\|views\)" | grep -v "/cli/")
+  if [ "x$config" != "x" ]; then
+    $bin unicorn -E production stop  > /dev/null
+    $bin unicorn -E production start > /dev/null
+    if [ "x$?" != "x0" ]; then
+      echo "failed to restart web" | mail -s "post-merge unicorn restart failed" $mailto
+      exit 1
+    fi
+    daemons="$daemons unicorn"
+  fi
+}
+
+run_migrations() {
+  for file in `git diff --summary $old_tag  | grep "create mode [0-9]\+ migrations" | sed s'/^.* migrations.//'`; do
+    if [ -f migrations/$file ]; then
+      migrations="$migrations $file"
+    fi
+  done
+
+  $bin db migrate > /dev/null
+  if [ $? != 0 ]; then
+    echo "failed to migrate db" | mail -s "failed to restart $app due to migration issue" $mailto
+    exit 1
+  fi
+}
+
+print_changelog() {
+  cat<<EOM
+Hi,
+
+$app updated.
+
+The following migrations were run:
+
+   ${migrations:-"None"}
+
+The following daemons were reloaded/restarted:
+
+   ${daemons:-"None"}
+
+$app has been updated with the following changes
+
+====================================================
+
+$(git log --stat --no-color $old_tag..HEAD)
+EOM
+}
+
+cd $home/$app
+update_cron
+update_gems
+run_migrations
+restart_daemons
+
+git tag $new_tag
+print_changelog | mail -s "Restarted $app" $mailto

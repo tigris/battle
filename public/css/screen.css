@@ -1,0 +1,312 @@
+* {
+  vertical-align: baseline;
+  font-weight: inherit;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: #555;
+  margin: 20px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", helvetica, clean, sans-serif;
+  font-size: 13px;
+  background: #ccc;
+  height: 100%;
+  line-height: 110%;
+}
+
+table, thead, tbody, tr, td, th {
+  border: 1px solid #ccc;
+}
+
+em {
+  font-size: 70%;
+  font-style: italic;
+}
+
+td {
+  padding: 0 10px;
+}
+
+th {
+  padding: 5px 15px;
+  background: #eee;
+}
+
+#wrapper {
+  margin: 0 auto;
+  background: #fff;
+  padding: 0;
+  border: 2px solid #222;
+}
+
+.fixed {
+  width: 978px;
+}
+
+.fluid {
+  width: 90%;
+}
+
+#header {
+  height: 130px;
+  background: url(/art/banner.png);
+  margin: 0;
+}
+
+#header h1 {
+  height: 45px;
+  font: 250% Trebuchet MS;
+  padding: 30px 20px 10px 20px;
+  color: #222;
+}
+
+#nav_container {
+  margin: 0;
+}
+
+#nav {
+  margin: 0 0 0 0;
+  background: #555;
+  line-height: 25px;
+}
+
+#nav li {
+  list-style: none;
+  display: inline;
+  padding: 7px 0;
+}
+
+#nav li a {
+  padding: 7px;
+  color: #eee;
+  text-decoration: none;
+  border: none;
+}
+
+#nav li a:hover {
+  background: #222;
+  color: #fff;
+}
+
+#user_displaya {
+  margin: 0 0 0 0;
+  background: #555;
+  color: #fff;
+  padding-left: 10px;
+  line-height: 25px;
+}
+
+#sidebar_left {
+  float: left;
+  width: 180px;
+  padding: 10px 0 10px 10px;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f0f0f0;
+  margin: 0 15px 0 0;
+  line-height: 20px;
+}
+
+#sidebar_left ul {
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+#sidebar_left li {
+  line-height: 25px;
+}
+
+#sidebar_left ul {
+}
+
+#sidebar_right {
+  width: 160px;
+  padding: 10px;
+  float: right;
+  background: #C8E4EE;
+  margin: 0 0 10px 10px;
+  border-left: 1px solid #97CBDF;
+  border-right: 1px solid #97CBDF;
+  border-bottom: 1px solid #97CBDF;
+  color: #1F5063;
+}
+
+#sidebar_right h2 {
+  font: 110% Verdana;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #13313C;
+}
+
+#sidebar_right p {
+  font: 100% Arial;
+  line-height: 20px;
+}
+
+#content {
+  padding: 0 15px;
+  margin: 0 0 0 200px;
+}
+
+#content h1 {
+  font-size: 140%;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+}
+
+#content h2 {
+  font-size: 130%;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+}
+
+#content h3 {
+  font-size: 125%;
+  font-weight: bold;
+  color: #555;
+  border-top: 1px solid #f6f6f6;
+  border-bottom: 1px solid #f6f6f6;
+  padding: 5px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+div, h1, h2, h3, h4, p, blockquote {
+  margin: 10px 0;
+  line-height: 25px;
+}
+
+ul li {
+  list-style: none;
+  padding: 0 15px;
+  line-height: 20px;
+}
+
+ol li {
+  margin: 0 15px;
+  line-height: 20px;
+}
+
+#footer {
+  margin: 30px 0 0 0;
+  padding: 10px;
+  background: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  clear: both;
+}
+
+a img {
+  border: none;
+}
+
+a {
+  color: #c00;
+  border-bottom: 1px dashed #c00;
+  text-decoration: none;
+}
+
+a:hover {
+  border: none;
+  text-decoration: underline;
+}
+
+.message {
+  padding: 5px 5px 5px 25px;
+  color: #000;
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: #D9E394;
+  border: 2px solid #BAD43D;
+  color: #708A00;
+}
+
+.error {
+  background-color: #E28F81;
+  border: 2px solid #CC2C18;
+  color: #820000;
+}
+
+.warning {
+  background-color: #FCC675;
+  border: 2px solid #FF9900;
+  color: #B54F00;
+}
+
+#news em {
+  display: block;
+  text-align: right;
+  white-space: nowrap;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+  width: 750px;
+}
+
+fieldset {
+  border-top: 2px dotted #C4BFB8;
+  border-left: 1px solid #F8F3EB;
+  border-bottom: none;
+  border-right: none;
+  margin-top: 15px;
+}
+
+legend {
+  font-size: 110%;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+label {
+  float: left;
+  width: 150px;
+  padding: 3px 10px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+input, textarea, select, button {
+  padding: 3px;
+}
+
+select {
+  width: auto;
+}
+
+form div {
+  margin-top: 10px;
+  padding: 0;
+  display: block;
+  clear: left;
+}
+
+form div.submit, button {
+  text-align: center;
+}
+
+.dialog {
+  text-align: center;
+}
+
+#loc {
+  margin-left: 150px;
+}
+
+#home div {
+  text-align: center;
+}
+
+#home .first, #home .second {
+  font-weight: bold;
+  font-size: 24pt;
+}

@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require File.join(File.dirname(__FILE__), '..', 'lib', 'battle', 'cli')
+
+bin     = Battle::Cli.bin
+option  = (ARGV.shift || 'help').strip
+usage   = %Q{
+  usage: #{bin} [-h|--help]
+
+  Commands are:
+    -h, --help  This help message.
+    -r  --root  Battle root path.
+    -b  --bin   Battle bin path.
+    -l  --lib   Battle lib path.
+}.strip
+
+case option
+  when /^\-{0,2}h(?:elp)?$/, nil then puts usage
+  when '-b', '--bin'             then puts File.expand_path(Battle::Cli.root)
+  when '-r', '--root'            then puts File.expand_path(Battle.root)
+  when '-l', '--lib'             then puts File.expand_path(File.join(Battle.root, 'lib'))
+  else warn("#{bin}: '#{option}' is not an #{bin} option. See '#{bin} --help'.") && exit(-1)
+end

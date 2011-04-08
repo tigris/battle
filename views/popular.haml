@@ -1,0 +1,4 @@
+#popular
+  %ol
+    - @items.each do |item|
+      %li #{item.name} (#{item.vote_count})

@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %title Battle
+    %meta{charset: 'utf-8'}/
+    %meta{'http-equiv' => 'Content-Type', content: 'text/html;charset=utf-8'}/
+    %link{href: '/css/screen.css', media: 'screen', rel: 'stylesheet', type: 'text/css'}/
+    %script{src: '/js/jquery-1.5.1.min.js'}
+    %script{src: '/js/battle.js'}
+    - if has_content? :head
+      = yield_content :head
+  %body
+    #wrapper.fixed
+      #header
+      #nav_container
+        %ul#nav
+      #sidebar_left
+        != haml :_nav
+      - if has_content? :right
+        #sidebar_right
+          = yield_content :right
+      #content
+        != yield
+      #footer

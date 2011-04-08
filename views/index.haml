@@ -1,0 +1,15 @@
+#home
+  - if @first
+    .first
+      %form{action: url_for(:vote), method: :post}
+        %input{type: :hidden, name: :up_id, value: @first.id}/
+        - if @second
+          %input{type: :hidden, name: :down_id, value: @second.id}/
+      %a= @first.name
+  %div vs.
+  - if @second
+    .second
+      %form{action: url_for(:vote), method: :post}
+        %input{type: :hidden, name: :up_id, value: @second.id}/
+        %input{type: :hidden, name: :down_id, value: @first.id}/
+      %a= @second.name
