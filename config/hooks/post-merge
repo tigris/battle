@@ -26,10 +26,11 @@ update_cron() {
 }
 
 restart_daemons() {
-  config=$(git diff $old_tag | grep "^--- a/config/nginx")
+  config=$(git diff $old_tag | grep "^--- a/config/lighttpd")
   if [ "x$config" != "x" ]; then
-    sudo service nginx reload > /dev/null
-    daemons="$daemons nginx"
+    sudo cp config/lighttpd/*.conf /etc/lighttpd/conf-enabled
+    sudo service lighttpd reload > /dev/null
+    daemons="$daemons lighttpd"
   fi
 
   config=$(git diff $old_tag | grep "^--- a/\(lib\|views\)" | grep -v "/cli/")
