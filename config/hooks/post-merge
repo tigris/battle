@@ -1,6 +1,6 @@
 #!/bin/bash
 
-home="/var/www"
+home="/srv"
 app="battle"
 bin="./bin/battle"
 mailto="root"
