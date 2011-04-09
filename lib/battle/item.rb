@@ -10,6 +10,10 @@ module Battle
       ),
       random_with_where: Battle.db.prepare(
         self,
+        %q{select * from items where id != ? order by random() limit 1}
+      ),
+      random_with_group: Battle.db.prepare(
+        self,
         %q{select * from items where id != ? and group_id = ? order by random() limit 1}
       ),
     }
@@ -17,6 +21,8 @@ module Battle
     def self.random item = nil
       if item.nil?
         PREPARED_STATEMENTS[:random_any].execute.first
+      elsif item.group_id.nil?
+        PREPARED_STATEMENTS[:random_with_where].execute(item.id).first
       else
         PREPARED_STATEMENTS[:random_with_where].execute(item.id, item.group_id).first
       end
