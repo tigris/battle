@@ -3,16 +3,35 @@ require 'battle/scheme/vote'
 module Battle
   class Vote < Scheme::Vote
     PREPARED_STATEMENTS = {
-      count: Battle.db.prepare(
-        %q{select coalesce(sum(value::integer*2 - 1), 0) as count from votes where item_id = ?}
+      count:   Battle.db.prepare(
+        %q{select coalesce(sum(value::integer*2 - 1)) as count from votes where item_id = ?}
       ),
-      popular:           Battle.db.prepare(
-        %q{select item_id, count(*) as count from votes where value = true group by item_id order by count asc limit ?}
+      popular: Battle.db.prepare(
+        %q{
+          select
+            distinct item_id,
+            (
+              (select count(*) from votes where value = true and item_id = v.item_id)
+              - (select count(*) from votes where value = false and item_id = v.item_id)
+            ) as total
+          from votes v
+          order by total desc
+        }
       ),
-      hated:             Battle.db.prepare(
-        %q{select item_id, count(*) as count from votes where value = false group by item_id order by count desc limit ?}
+      hated:   Battle.db.prepare(
+        %q{
+          select
+            distinct item_id,
+            (
+              (select count(*) from votes where value = true and item_id = v.item_id)
+              - (select count(*) from votes where value = false and item_id = v.item_id)
+            ) as total
+          from votes v
+          order by total asc
+        }
       ),
     }
+
 
     def self.count item
       PREPARED_STATEMENTS[:count].execute(item.id).first[:count]
