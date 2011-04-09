@@ -12,7 +12,7 @@ daemons=""
 migrations=""
 
 update_gems() {
-  logs=`bundle install --path gems 2>&1`
+  logs=`/var/lib/gems/1.9.1/bin/bundle install --path gems 2>&1`
 
   if [ $? != 0 ]; then
     echo "failed to gem bundle: $! $logs" | mail -s "failed to restart $app due to bundler issue" $mailto
