@@ -4,7 +4,7 @@ module Battle
   class Vote < Scheme::Vote
     PREPARED_STATEMENTS = {
       count: Battle.db.prepare(
-        %q{select count(*) as count from votes where item_id = ?}
+        %q{select coalesce(sum(value::integer*2 - 1), 0) as count from votes where item_id = ?}
       ),
       popular:           Battle.db.prepare(
         %q{select item_id, count(*) as count from votes where value = true group by item_id order by count asc limit ?}
