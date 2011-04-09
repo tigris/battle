@@ -16,6 +16,7 @@ module Battle
             ) as total
           from votes v
           order by total desc
+          limit ?
         }
       ),
       hated:   Battle.db.prepare(
@@ -28,6 +29,7 @@ module Battle
             ) as total
           from votes v
           order by total asc
+          limit ?
         }
       ),
     }
